@@ -1,0 +1,748 @@
+{
+  "info": {
+    "_postman_id": "e075ff23-19cb-410e-ad82-33bf49c37c16",
+    "name": "Assignment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56176963",
+    "_collection_link": "https://go.postman.co/collection/56176963-e075ff23-19cb-410e-ad82-33bf49c37c16?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "HomeAssignmentQA",
+      "item": [
+        {
+          "name": "Employee",
+          "item": [
+            {
+              "name": "Create_Employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Validate status code\r",
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Employee created successfully\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employeeName\": \"Santosh Dulal\",\r\n  \"employeeId\": \"EMP001\",\r\n  \"email\": \"test@tester.com.np\",\r\n  \"department\": \"Quality Assurance\",\r\n  \"supervisor\": \"David Brown\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseURL}}/api/employees",
+                  "host": [
+                    "{{baseURL}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Duplicate_email",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Duplicate email message\", function () {\r",
+                      "    let response = pm.response.json();\r",
+                      "    pm.expect(response.message).to.eql(\"Email already exists. Please provide unique email address\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employeeName\": \"Santosh Dulal\",\r\n  \"employeeId\": \"EMP001\",\r\n  \"email\": \"test@tester.com.np\",\r\n  \"department\": \"Quality Assurance\",\r\n  \"supervisor\": \"David Brown\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Missing_employee_id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Duplicate email message\", function () {\r",
+                      "    let response = pm.response.json();\r",
+                      "    pm.expect(response.message).to.eql(\"Employee_ID is required\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employeeName\": \"Santosh Dulal\",\r\n  \"employeeId\": \"\",\r\n  \"email\": \"test@tester.com.np\",\r\n  \"department\": \"Quality Assurance\",\r\n  \"supervisor\": \"David Brown\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Retrieve_Employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}//api/employees/101",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "",
+                    "api",
+                    "employees",
+                    "101"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update_employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 204\", function () {\r",
+                      "    pm.response.to.have.status(204);\r",
+                      "})\r",
+                      "\r",
+                      "pm.test(\"Response message should be 'Employee updated successfully'\", function () {\r",
+                      "    let response = pm.response.json();\r",
+                      "    pm.expect(response.message).to.eql(\"Employee updated successfully\");\r",
+                      "})"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employeeName\": \"San Tosh\",\r\n  \"employeeId\": \"EMP001\",\r\n  \"email\": \"qa@testing.com\",\r\n  \"department\": \"Engineering\",\r\n  \"supervisor\": \"Some Body\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "100"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete_Employee",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Delete message validation\", function () {\r",
+                      "    let response = pm.response.json();\r",
+                      "    pm.expect(response.message).to.eql(\"Deleted successfully\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/employees/100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "employees",
+                    "100"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Training",
+          "item": [
+            {
+              "name": "Training_Assignment",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Module assigned successfully\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employee\": \"John Doe\",\r\n  \"trainingModule\": \"Workplace Safety\",\r\n  \"dueDate\": \"2026-07-31\",\r\n  \"trainingid\":\"TRAIN001\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/ api/trainings/assign ",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    " api",
+                    "trainings",
+                    "assign "
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Training completion",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Assignment completed successfully\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employee\": \"John Smith\",\r\n  \"trainingModule\": \"Workplace Safety\",\r\n  \"dueDate\": \"2026-07-31\",\r\n  \"completionDate\": \"2026-07-28\",\r\n  \"employeeNotes\": \"Completed all required training modules successfully.\",\r\n  \"trainingid\":\"TRAIN001\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/trainings/complete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "trainings",
+                    "complete"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Complete_Unassigned_Training",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Traning Id not found\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employee\": \"John Smith\",\r\n  \"trainingModule\": \"Workplace Safety\",\r\n  \"dueDate\": \"2026-07-31\",\r\n  \"completionDate\": \"2026-07-28\",\r\n  \"employeeNotes\": \"Completed all required training modules successfully.\",\r\n  \"trainingid\":\"TRAIN001\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/trainings/complete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "trainings",
+                    "complete"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Missing_trainingID",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 400\", function () {\r",
+                      "    pm.response.to.have.status(400);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Traning ID not found\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"employee\": \"John Smith\",\r\n  \"trainingModule\": \"Workplace Safety\",\r\n  \"dueDate\": \"2026-07-31\",\r\n  \"completionDate\": \"2026-07-28\",\r\n  \"employeeNotes\": \"Completed all required training modules successfully.\",\r\n  \"trainingid\":\"TRAIN001\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/trainings/complete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "trainings",
+                    "complete"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "training_approval",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Cannot approve non completed module\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"trainingid\":\"TRAIN001\",\r\n  \"status\": \"Pending\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/trainings/approve ",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "trainings",
+                    "approve "
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Approve_non_completed_training",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code should be 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "// Validate response message\r",
+                      "let response = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Response message should be success\", function () {\r",
+                      "    pm.expect(response.message).to.eql(\"Assignment approved successfully\");\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{session}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"trainingid\":\"TRAIN001\",\r\n  \"status\": \"Approve\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/trainings/approve ",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "trainings",
+                    "approve "
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
