@@ -1,0 +1,17 @@
+[
+  {
+    "employee": "Ram",
+    "trainingModule": "Cypress Basics",
+    "dueDate": "2026-07-10"
+  },
+  {
+    "employee": "Sam",
+    "trainingModule": "API Testing",
+    "dueDate": "2026-07-15"
+  },
+  {
+    "employee": "Tan",
+    "trainingModule": "Automation Framework",
+    "dueDate": "2026-07-20"
+  }
+]

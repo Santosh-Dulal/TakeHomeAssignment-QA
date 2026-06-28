@@ -1,0 +1,23 @@
+[
+  {
+    "name": "John",
+    "employeeId": "EMP001",
+    "email": "john@test.com",
+    "department": "IT",
+    "supervisor": "Ram"
+  },
+  {
+    "name": "Peter",
+    "employeeId": "EMP002",
+    "email": "peter@test.com",
+    "department": "HR",
+    "supervisor": "Sam"
+  },
+  {
+    "name": "David",
+    "employeeId": "EMP003",
+    "email": "david@test.com",
+    "department": "Finance",
+    "supervisor": "Dan"
+  }
+]

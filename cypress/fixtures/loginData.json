@@ -1,0 +1,14 @@
+{
+  "supervisor": {
+    "username": "supervisor@test.com",
+    "password": "supervisor@123"
+  },
+  "employee": {
+    "username": "employee@test.com",
+    "password": "employee@123"
+  },
+  "admin": {
+    "username": "admin@test.com",
+    "password": "admin@123"
+  }
+}
